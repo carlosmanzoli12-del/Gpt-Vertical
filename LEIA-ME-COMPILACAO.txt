@@ -1,0 +1,37 @@
+VERTICAL CANVAS LITE - CENAS DO OBS + INSTALADOR
+================================================
+
+O código desta versão foi preparado para OBS Studio 27.2.4 (Windows x64)
+e Qt 5.15.2. O painel oferece:
+- Automático: acompanha a cena ativa do OBS.
+- Manual: permite escolher uma cena já existente na coleção.
+- Lista as fontes da cena selecionada.
+
+IMPORTANTE SOBRE AS CENAS E FONTES
+As cenas e fontes são reutilizadas diretamente. Os controles de mover,
+mostrar/ocultar, remover e transformar fontes atuam na cena original do OBS.
+Esta versão ainda NÃO oferece uma composição vertical independente sem
+alterar a cena horizontal.
+
+COMO GERAR A DLL E O INSTALADOR EXE
+1. Crie um repositório GitHub e envie todos os arquivos desta pasta.
+2. Mantenha o workflow em .github/workflows/build.yml.
+3. Abra a aba Actions no GitHub.
+4. Execute "Build Vertical Canvas Lite + Installer (OBS 27.2.4)" com
+   Run workflow, ou faça push na branch main/master.
+5. Quando a execução terminar com sucesso, baixe o artefato
+   "VerticalCanvasLite-Windows-x64". Ele contém a DLL e o instalador EXE.
+6. Feche o OBS e execute VerticalCanvasLite-Setup-x64.exe como administrador.
+
+REQUISITOS DE COMPILAÇÃO
+- Windows Server 2022 runner (configurado no GitHub Actions)
+- Visual Studio 2022 C++ / CMake
+- Qt 5.15.2 MSVC 2019 x64
+- Código-fonte do OBS 27.2.4 e obs-deps compatíveis
+- Inno Setup 6
+
+ESTADO DE VALIDAÇÃO
+O ambiente onde este pacote foi preparado não possui MSVC/Qt/OBS SDK para
+compilar e testar o plugin Windows. Portanto, o EXE final ainda não foi
+compilado nem testado. O workflow executa essa compilação em runner Windows
+e falha explicitamente se não encontrar a DLL ou o instalador gerado.
