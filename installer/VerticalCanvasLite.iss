@@ -33,12 +33,23 @@ Source: "..\build\Release\vertical-canvas-lite.dll"; DestDir: "{app}\obs-plugins
 [Icons]
 Name: "{autodesktop}\OBS Studio (Vertical Canvas Lite)"; Filename: "{app}\bin\64bit\obs64.exe"; Tasks: desktopicon
 
+
 [Code]
-function InitializeSetup(): Boolean;
+function NextButtonClick(CurPageID: Integer): Boolean;
 begin
   Result := True;
-  if not FileExists(ExpandConstant('{app}\bin\64bit\obs64.exe')) then begin
-    MsgBox('O instalador não encontrou obs64.exe nesta pasta. Selecione a pasta principal do OBS Studio 64 bits.', mbError, MB_OK);
-    Result := False;
+
+  if CurPageID = wpSelectDir then
+  begin
+    if not FileExists(ExpandConstant('{app}\bin\64bit\obs64.exe')) then
+    begin
+      MsgBox(
+        'OBS Studio nao encontrado nesta pasta. Selecione a pasta correta do OBS 64 bits.',
+        mbError,
+        MB_OK
+      );
+      Result := False;
+    end;
   end;
 end;
+
