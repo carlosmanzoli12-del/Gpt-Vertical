@@ -37,25 +37,17 @@ jobs:
           dir: ${{ github.workspace }}/qt
           cache: true
 
-      - name: Baixar dependências compatíveis do OBS
+      - name: Baixar dependências do OBS 27.2.4
         shell: pwsh
         run: |
           $ErrorActionPreference = 'Stop'
-          $candidates = @('2022-03-07','2022-02-08','2022-01-27','2022-01-07','2021-12-14')
-          $downloaded = $false
-          foreach ($version in $candidates) {
-            $url = "https://github.com/obsproject/obs-deps/releases/download/$version/windows-deps-$version-x64.zip"
-            try {
-              Invoke-WebRequest -Uri $url -OutFile deps.zip
-              Write-Host "Usando obs-deps $version"
-              $downloaded = $true
-              break
-            } catch {
-              Write-Host "Dependências $version não encontradas; tentando próxima versão."
-            }
+          $url = "https://github.com/obsproject/obs-deps/releases/download/win-2022-01-31/windows-deps-2022-01-31.zip"
+          Invoke-WebRequest -Uri $url -OutFile deps.zip
+          New-Item -ItemType Directory -Force deps | Out-Null
+          Expand-Archive deps.zip -DestinationPath deps -Force
+          if (-not (Test-Path "deps/win64")) {
+            throw "A pasta deps/win64 não foi encontrada."
           }
-          if (-not $downloaded) { throw 'Não foi possível baixar uma versão compatível de obs-deps.' }
-          Expand-Archive deps.zip -DestinationPath deps
 
       - name: Configurar OBS para gerar bibliotecas
         shell: pwsh
